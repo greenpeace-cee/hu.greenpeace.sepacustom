@@ -1,0 +1,20 @@
+{
+  "_comment": "register HU file format",
+  "_lookup": ["name"],
+  "_translate": ["title"],
+  "name": "sepa_file_format",
+  "title": "SEPA File Formats",
+  "is_active": "1",
+  "_values": [
+    {
+      "_lookup": ["value"],
+      "_translate": ["label"],
+      "label": "OTP HU Fixed Length (.txt)",
+      "value": "10",
+      "name": "bankotphu",
+      "filter": "0",
+      "is_reserved": "1",
+      "is_active": "1"
+    }
+  ]
+}

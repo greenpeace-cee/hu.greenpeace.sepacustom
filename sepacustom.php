@@ -1,8 +1,9 @@
 <?php
 /*-------------------------------------------------------+
-| Greenpeace AT CiviSEPA Customisations                  |
+| Greenpeace HU CiviSEPA Customisations                  |
 | Copyright (C) 2017 SYSTOPIA                            |
 | Author: B. Endres (endres -at- systopia.de)            |
+|   G. Aicher (georg.aicher -at- aicher-consulingt.at    |
 | http://www.systopia.de/                                |
 +--------------------------------------------------------+
 | This program is released as free software under the    |
@@ -25,28 +26,33 @@ require_once 'sepacustom.civix.php';
  */
 function sepacustom_civicrm_defer_collection_date(&$collection_date, $creditor_id) {
   $at_bank_holidays = array('2018-01-01',
+                            '2018-03-15',
+                            '2018-03-16',
                             '2018-03-30',
+                            '2018-04-01',
                             '2018-04-02',
                             '2018-05-01',
-                            '2018-05-10',
+                            '2018-05-20',
                             '2018-05-21',
-                            '2018-05-31',
-                            '2018-08-15',
-                            '2018-10-26',
+                            '2018-08-20',
+                            '2018-10-22',
+                            '2018-10-23',
                             '2018-11-01',
+                            '2018-11-02',
+                            '2018-12-24',
                             '2018-12-25',
                             '2018-12-26',
                             '2019-01-01',
+                            '2019-03-15',
                             '2019-04-19',
+                            '2019-04-21',
                             '2019-04-22',
                             '2019-05-01',
-                            '2019-05-31',
+                            '2019-06-09',
                             '2019-06-10',
-                            '2019-06-20',
-                            '2019-08-15',
-                            '2019-10-26',
+                            '2019-08-19',
+                            '2019-10-23',
                             '2019-11-01',
-                            '2019-12-24',
                             '2019-12-25',
                             '2019-12-26');
 
@@ -60,16 +66,15 @@ function sepacustom_civicrm_defer_collection_date(&$collection_date, $creditor_i
 /**
  * Generate custom SEPA mandate reference
  *
- * @see https://redmine.greenpeace.at/issues/460
- *
  * @author B. Endres (endres@systopia.de)
+ *
  */
 function sepacustom_civicrm_create_mandate(&$mandate_parameters) {
   if (isset($mandate_parameters['reference']) && !empty($mandate_parameters['reference']))
     return;   // user defined mandate
 
-  // GP-1-FRST-2016-Cxxxxxxx-xxx
-  $reference_fmt = "GP-%s-%s-%s-C%07d-%03d";
+  // GP-1-Cxxxxxxx-xxx
+  $reference_fmt = "GP-%s-C%07d-%03d";
   $creditor_id   = $mandate_parameters['creditor_id'];
   $type          = $mandate_parameters['type'];
   $year          = date('Y');
@@ -78,7 +83,6 @@ function sepacustom_civicrm_create_mandate(&$mandate_parameters) {
   // find and set the first unused one
   $serial = 1;
   while ($serial < 1000) {
-    $reference_candidate = sprintf($reference_fmt, $creditor_id, $type, $year, $contact_id, $serial);
     if (CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_sdd_mandate WHERE reference = '$reference_candidate';")) {
       // this reference_candidate already exists;
       $serial += 1;
@@ -90,7 +94,7 @@ function sepacustom_civicrm_create_mandate(&$mandate_parameters) {
     }
   }
 
-  error_log("at.greenpeace.sepacustom: Mandate reference generation failed. Please contact SYSTOPIA.");
+  error_log("hu.greenpeace.sepacustom: Mandate reference generation failed. Please contact SYSTOPIA.");
   CRM_Core_Session::setStatus("Mandate reference generation failed. Please contact SYSTOPIA.", ts('Error'), 'error');
 }
 
@@ -214,6 +218,9 @@ function sepacustom_civicrm_uninstall() {
  */
 function sepacustom_civicrm_enable() {
   _sepacustom_civix_civicrm_enable();
+
+  $customData = new CRM_Sepacustom_CustomData('hu.greenpeace.sepacustom');
+  $customData->syncOptionGroup(__DIR__ . '/resources/formats_option_group.json');
 }
 
 /**
