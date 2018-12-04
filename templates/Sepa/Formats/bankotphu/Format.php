@@ -24,7 +24,7 @@ class CRM_Sepa_Logic_Format_bankotphu extends CRM_Sepa_Logic_Format {
    * @return mixed
    */
   public function characterEncode($content) {
-    return iconv('UTF-8', 'WINDOWS-1252', $content);
+    return iconv('UTF-8', 'WINDOWS-1252//TRANSLIT//IGNORE', $content);
   }
 
   /**
