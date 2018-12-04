@@ -66,7 +66,7 @@ class CRM_Sepa_Logic_Format_bankotphu extends CRM_Sepa_Logic_Format {
    * characters ( ).,/:;\+!@#$&*{}[]?=' "
    */
   public function getFilename($variable_string) {
-	  $filename = 'U18178883' . date('d') .  substr($variable_string, -2) . '.txt' . '-' . date('Ymd') . '.txt';
+	  $filename = 'U18178883' . date('d') .  substr($variable_string, -2) . '.txt' . '-' . date('Ymd') . substr($variable_string, 2, 1) . '.txt';
 	  return $filename;
   }
 }
