@@ -7,7 +7,7 @@
   "is_active": "1",
   "_values": [
     {
-      "_lookup": ["value"],
+      "_lookup": ["name"],
       "_translate": ["label"],
       "label": "OTP HU Fixed Length (.txt)",
       "name": "bankotphu",
