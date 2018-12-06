@@ -10,7 +10,6 @@
       "_lookup": ["value"],
       "_translate": ["label"],
       "label": "OTP HU Fixed Length (.txt)",
-      "value": "10",
       "name": "bankotphu",
       "filter": "0",
       "is_reserved": "1",
