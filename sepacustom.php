@@ -15,6 +15,8 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+use Civi\Api4\SepaBankHoliday;
+
 require_once 'sepacustom.civix.php';
 
 /**
